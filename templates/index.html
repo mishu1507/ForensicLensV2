@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ForensicLens | Automated Digital Forensics</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+
+<style>
+/* Hover glow animation */
+.feature-card {
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,0.12),
+        0 0 22px rgba(100,180,255,0.15);
+}
+
+/* Flow strip */
+.flow {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-top:22px;
+    flex-wrap:wrap;
+}
+.flow-step {
+    flex:1;
+    padding:18px;
+    border-radius:14px;
+    text-align:center;
+    background:rgba(255,255,255,0.03);
+    box-shadow:0 0 0 1px rgba(255,255,255,0.08);
+}
+.flow-arrow {
+    opacity:.4;
+    font-size:1.4rem;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="brand">
+        <div class="brand-icon">🛡</div>
+        <div>
+            <h1>ForensicLens</h1>
+            <span>Digital Forensics & Incident Analysis</span>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="wrapper">
+
+    <div class="badge">🔍 Automated Investigation System</div>
+
+    <h2>
+        Analyze System Logs<br>
+        <span style="color:var(--accent)">Reconstruct Digital Incidents</span>
+    </h2>
+
+    <p class="subtitle">
+        Upload system log files to automatically extract evidence,
+        correlate events, and generate an investigation-ready timeline.
+    </p>
+
+    <!-- ANALYZE PANEL -->
+    <div class="panel">
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+
+            <div class="upload" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon">⬆</div>
+                <h3>Upload System Logs</h3>
+                <p class="subtitle" style="font-size:.85rem">
+                    Drag & drop or click to browse<br>
+                    <span style="opacity:.7">Multiple files supported</span>
+                </p>
+                <div id="fileInfo" class="subtitle"
+                     style="margin-top:12px;font-size:.8rem;opacity:.8;display:none"></div>
+            </div>
+
+            <input id="fileInput" type="file" name="logfiles" multiple onchange="updateFiles(this)">
+
+            <div id="warning" class="subtitle"
+                 style="margin-top:12px;font-size:.8rem;color:#ff6b6b;display:none">
+                Please upload at least one log file before analysis.
+            </div>
+
+            <button id="analyzeBtn" type="submit"
+                    style="width:100%;margin-top:28px" disabled>
+                Analyze Evidence
+            </button>
+        </form>
+    </div>
+
+    <!-- INVESTIGATION FLOW STRIP -->
+    <div class="panel" style="margin-top:56px">
+
+        <h3 style="text-align:center;margin-bottom:18px">
+            Investigation Workflow
+        </h3>
+
+        <div class="flow">
+            <div class="flow-step">
+                <div style="font-size:1.4rem">📂</div>
+                <strong>Upload</strong>
+                <p class="subtitle" style="font-size:.75rem">Collect log evidence</p>
+            </div>
+
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-step">
+                <div style="font-size:1.4rem">⚙️</div>
+                <strong>Parse</strong>
+                <p class="subtitle" style="font-size:.75rem">Normalize & structure</p>
+            </div>
+
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-step">
+                <div style="font-size:1.4rem">🧠</div>
+                <strong>Correlate</strong>
+                <p class="subtitle" style="font-size:.75rem">Link related events</p>
+            </div>
+
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-step">
+                <div style="font-size:1.4rem">📄</div>
+                <strong>Report</strong>
+                <p class="subtitle" style="font-size:.75rem">Generate forensic output</p>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- WHAT FORENSICLENS DOES -->
+<div class="panel" style="margin-top:56px">
+
+    <h3 style="margin-bottom:28px;text-align:center">
+        What ForensicLens Does
+    </h3>
+
+    <div style="
+        display:grid;
+        grid-template-columns:repeat(2, 1fr);
+        gap:28px;
+    ">
+
+        <div class="feature-card" style="
+            padding:28px;
+            border-radius:18px;
+            background:rgba(255,255,255,0.03);
+            box-shadow:0 0 0 1px rgba(255,255,255,0.08);
+        ">
+            <h4>📊 Log Parsing</h4>
+            <p class="subtitle" style="font-size:.82rem">
+                Automated ingestion and normalization of system,
+                application, and network logs.
+            </p>
+        </div>
+
+        <div class="feature-card" style="
+            padding:28px;
+            border-radius:18px;
+            background:rgba(255,255,255,0.03);
+            box-shadow:0 0 0 1px rgba(255,255,255,0.08);
+        ">
+            <h4>🕒 Timeline Reconstruction</h4>
+            <p class="subtitle" style="font-size:.82rem">
+                Chronological reconstruction of events across
+                multiple evidence sources.
+            </p>
+        </div>
+
+        <div class="feature-card" style="
+            padding:28px;
+            border-radius:18px;
+            background:rgba(255,255,255,0.03);
+            box-shadow:0 0 0 1px rgba(255,255,255,0.08);
+        ">
+            <h4>🔍 Anomaly Detection</h4>
+            <p class="subtitle" style="font-size:.82rem">
+                Identifies suspicious behavior and irregular
+                patterns hidden inside logs.
+            </p>
+        </div>
+
+        <div class="feature-card" style="
+            padding:28px;
+            border-radius:18px;
+            background:rgba(255,255,255,0.03);
+            box-shadow:0 0 0 1px rgba(255,255,255,0.08);
+        ">
+            <h4>📄 PDF Reports</h4>
+            <p class="subtitle" style="font-size:.82rem">
+                Generates professional, evidence-ready
+                forensic reports.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+    <p class="subtitle" style="margin-top:38px;font-size:.75rem;opacity:.6">
+        Built for cybersecurity students, forensic analysts,
+        and incident responders.
+    </p>
+
+</div>
+
+<script>
+function updateFiles(input){
+    const info = document.getElementById("fileInfo");
+    const btn = document.getElementById("analyzeBtn");
+    const warning = document.getElementById("warning");
+
+    if(input.files.length > 0){
+        info.style.display = "block";
+        info.innerText = input.files.length + " file(s) selected for analysis";
+        btn.disabled = false;
+        warning.style.display = "none";
+    } else {
+        info.style.display = "none";
+        btn.disabled = true;
+        warning.style.display = "block";
+    }
+}
+
+document.querySelector("form").addEventListener("submit", function(e){
+    if(document.getElementById("fileInput").files.length === 0){
+        e.preventDefault();
+        alert("No log files uploaded. Please upload evidence before analysis.");
+    }
+});
+</script>
+<!-- FOOTER -->
+<div style="
+    margin-top:48px;
+    padding:18px 0;
+    text-align:center;
+    font-size:.75rem;
+    opacity:.6;
+">
+    © 2026 <strong>Aditi Borkar</strong> · ForensicLens  
+    <br>
+    Automated Digital Forensics & Incident Analysis System
+</div>
+
+
+</body>
+</html>
